@@ -20,6 +20,11 @@
         android:key="general_tweaks_general_category"
         android:title="@string/general_category">
 
+    <ListPreference
+        android:key="screen_off_animation"
+        android:title="@string/screen_off_animation_title"
+        android:entries="@array/screen_off_animation_entries"
+        android:entryValues="@array/screen_off_animation_values" />
 
     </PreferenceCategory>
 

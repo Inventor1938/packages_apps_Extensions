@@ -49,6 +49,11 @@ import com.android.settings.Utils;
 
 public class GeneralTweaks extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
+    private static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
+
+    private ListPreference mScreenOffAnimation;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +62,13 @@ public class GeneralTweaks extends SettingsPreferenceFragment implements OnPrefe
 
         final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen prefSet = getPreferenceScreen();
+
+        mScreenOffAnimation = (ListPreference) findPreference(SCREEN_OFF_ANIMATION);
+        int screenOffStyle = Settings.System.getInt(resolver,
+                Settings.System.SCREEN_OFF_ANIMATION, 0);
+        mScreenOffAnimation.setValue(String.valueOf(screenOffStyle));
+        mScreenOffAnimation.setSummary(mScreenOffAnimation.getEntry());
+        mScreenOffAnimation.setOnPreferenceChangeListener(this);
 
     }
 
@@ -71,7 +83,16 @@ public class GeneralTweaks extends SettingsPreferenceFragment implements OnPrefe
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        ContentResolver resolver = getActivity().getContentResolver();
+        if (preference == mScreenOffAnimation) {
+            String value = (String) newValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.SCREEN_OFF_ANIMATION, Integer.valueOf(value));
+            int valueIndex = mScreenOffAnimation.findIndexOfValue(value);
+            mScreenOffAnimation.setSummary(mScreenOffAnimation.getEntries()[valueIndex]);
+            return true;
+        }
         return false;
     }
 }

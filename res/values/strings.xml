@@ -371,4 +371,9 @@
     <string name="screen_off_animation_crt">CRT</string>
     <string name="screen_off_animation_scale">Scale</string>
 
+    <!-- AOSP Recents component Style -->
+    <string name="recents_component_type_title">Recents Style</string>
+    <string name="recents_pie">Pie</string>
+    <string name="recents_oreo">Oreo</string>
+
 </resources>
